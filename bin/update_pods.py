@@ -176,9 +176,9 @@ def _load_repo_if_needed(repository_ctx, repo_tool_bin_path):
     _exec(repository_ctx, ["rm", "-rf", repository_ctx.GetPodRootDir()])
     _exec(repository_ctx, ["mkdir", "-p", repository_ctx.GetPodRootDir()])
 
-    if url.startswith("http"):
+    if url.startswith("http") or url.startswith("git"):
         _fetch_remote_repo(repository_ctx, repo_tool_bin_path, target_name, url)
-    elif url.startswith("/"):
+    else:
         _link_local_repo(repository_ctx, target_name, url)
 
 def _update_repo_impl(repository_ctx):
