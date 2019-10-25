@@ -178,8 +178,10 @@ def _load_repo_if_needed(repository_ctx, repo_tool_bin_path):
 
     if url.startswith("http") or url.startswith("git"):
         _fetch_remote_repo(repository_ctx, repo_tool_bin_path, target_name, url)
-    else:
+    elif url.startswith("/"):
         _link_local_repo(repository_ctx, target_name, url)
+    else:
+        _link_local_repo(repository_ctx, target_name, SRC_ROOT+"/"+url)
 
 def _update_repo_impl(repository_ctx):
     if repository_ctx.GetTrace():
