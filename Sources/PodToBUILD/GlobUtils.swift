@@ -87,7 +87,7 @@ public class Glob: Collection {
                 adjustedPattern += "*"
             }
         }
-
+        print("pattern: \(adjustedPattern)")
         let patterns = behavior.supportsGlobstar ? expandGlobstar(pattern: adjustedPattern) : [adjustedPattern]
 
         for pattern in patterns {
@@ -127,20 +127,26 @@ public class Glob: Collection {
         let fileManager = FileManager.default
 
         var directories: [String]
-        print("Expanding files: \(parts)  \(firstPart)")
-        do {
-            directories = try fileManager.subpathsOfDirectory(atPath: firstPart).compactMap { subpath in
-                let fullPath = NSString(string: firstPart).appendingPathComponent(subpath)
-                var isDirectory = ObjCBool(false)
-                if fileManager.fileExists(atPath: fullPath, isDirectory: &isDirectory) && isDirectory.boolValue {
-                    return fullPath
-                } else {
-                    return nil
+        if firstPart != nil, !firstPart.isEmpty {
+            do {
+                print("Expanding files: \(parts) : \(firstPart)")
+                directories = try fileManager.subpathsOfDirectory(atPath: firstPart).compactMap { subpath in
+                    let fullPath = NSString(string: firstPart).appendingPathComponent(subpath)
+                    var isDirectory = ObjCBool(false)
+                    print("direct files: \(isDirectory) : \(fullPath)")
+                    if fileManager.fileExists(atPath: fullPath, isDirectory: &isDirectory) && isDirectory.boolValue {
+                        return fullPath
+                    } else {
+                        return nil
+                    }
                 }
+            } catch {
+                directories = []
+                print("Error parsing file system item: \(error)")
             }
-        } catch {
+        } else {
             directories = []
-            print("Error parsing file system item: \(error)")
+            print("Error parsing file system item: EMPTY")
         }
 
         if behavior.includesFilesFromRootOfGlobstar {
