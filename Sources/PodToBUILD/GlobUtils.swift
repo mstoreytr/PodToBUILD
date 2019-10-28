@@ -127,7 +127,7 @@ public class Glob: Collection {
         let fileManager = FileManager.default
 
         var directories: [String]
-
+        print("Expanding files: \(parts)  \(firstPart)")
         do {
             directories = try fileManager.subpathsOfDirectory(atPath: firstPart).compactMap { subpath in
                 let fullPath = NSString(string: firstPart).appendingPathComponent(subpath)
