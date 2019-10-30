@@ -275,6 +275,7 @@ public enum RepoActions {
             })
             return customHeaderSearchPaths
         }
+        print("LOGGY SEARCH PATH = \(searchPaths)")
 
         // Get the xcconfigHeaderSearchPaths
         let podSpecs: [PodSpec] = podSpec.subspecs + [podSpec]
@@ -338,11 +339,14 @@ public enum RepoActions {
                     return set.union(inner.denormalize())
                 })
         }
+        print("LOGGY GlobResult = \(globResultsArr)")
 
         // Batch create several symlinks for Pod style includes
         // creating thousands of processes in few milliseconds will
         // blow up otherwise.
         let currentDirectoryPath = FileManager.default.currentDirectoryPath
+        print("LOGGY \(buildOptions.generateHeaderMap) currentDirectoryPath = \(currentDirectoryPath)")
+
         // Get a de-duplicated, sorted (for determinism) list of all headers
         let globResults = Array(Set(globResultsArr)).sorted()
         if buildOptions.generateHeaderMap == false {
