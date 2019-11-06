@@ -127,7 +127,7 @@ public class Glob: Collection {
 
         var directories: [String]
         // If an empty or nil filepath then no need to look for it
-        if firstPart != nil, !firstPart.isEmpty {
+        if !firstPart.isEmpty {
             do {
                 directories = try fileManager.subpathsOfDirectory(atPath: firstPart).compactMap { subpath in
                     let fullPath = NSString(string: firstPart).appendingPathComponent(subpath)
