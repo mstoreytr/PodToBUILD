@@ -197,8 +197,8 @@ pod_repo_ = repository_rule(
         "install_script_tpl": attr.string(),
         "inhibit_warnings": attr.bool(default=False, mandatory=True),
         "trace": attr.bool(default=False, mandatory=True),
-        "enable_modules": attr.bool(default=True, mandatory=True),
-        "generate_module_map": attr.bool(default=True, mandatory=True),
+        "enable_modules": attr.bool(default=False, mandatory=True),
+        "generate_module_map": attr.bool(default=False, mandatory=True),
         "header_visibility": attr.string(),
     }
 )
